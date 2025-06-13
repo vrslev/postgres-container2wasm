@@ -27,3 +27,6 @@ jobs:
           make install
       - run: |
           c2w postgres:17 postgres.wasm
+      - uses: actions/upload-artifact@v4
+        with:
+          path: postgres.wasm
