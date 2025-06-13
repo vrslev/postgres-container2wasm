@@ -1,12 +1,20 @@
-This was an experiment to build a postgres.wasm from docker container. See artifact here: https://github.com/vrslev/postgres-container2wasm/actions/runs/15632751383.
+This was a failed (13.06.2025) experiment to build a postgres.wasm from docker container. See artifact here: https://github.com/vrslev/postgres-container2wasm/actions/runs/15632751383.
 
-Running with [wasmtime](https://wasmtime.dev) fails:
+Download [artifact from CI](https://github.com/vrslev/postgres-container2wasm/actions/runs/15632751383), run unzip:
 
 ```
-wasmtime --env POSTGRES_PASSWORD=pass ~/Downloads/postgres.wasm
+unzip ~/Downloads/artifact.zip
 ```
 
-output:
+## Wasmtime
+
+Running with [Wasmtime](https://wasmtime.dev) fails:
+
+```
+mise x wasmtime@33.0.0 -- wasmtime --env POSTGRES_PASSWORD=pass ~/Downloads/postgres.wasm
+```
+
+Failed output:
 
 ```
 The files belonging to this database system will be owned by user "postgres".
@@ -30,4 +38,14 @@ running bootstrap script ... 2025-06-13 12:13:00.286 UTC [80] FATAL:  could not 
 child process exited with exit code 1
 initdb: removing contents of data directory "/var/lib/postgresql/data"
 
+```
+
+## WasmEdge
+
+Running with [WasmEdge](https://wasmedge.org):
+
+```
+export VERSION=0.14.1
+curl -sSf https://raw.githubusercontent.com/WasmEdge/WasmEdge/master/utils/install.sh | bash
+~/.wasmedge/bin/wasmedge --env POSTGRES_PASSWORD=pass ~/Downloads/postgres.wasm
 ```
