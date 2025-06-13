@@ -20,4 +20,8 @@ jobs:
           mise_toml: |
             [tools]
             wasmtime = "latest"
-      - run: mise x ubi:container2wasm/container2wasm -- c2w --help
+      - run: |
+          git clone https://github.com/container2wasm/container2wasm
+          cd container2wasm
+          make
+          make install
