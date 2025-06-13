@@ -25,3 +25,5 @@ jobs:
           cd container2wasm
           make
           make install
+      - run: |
+          c2w postgres:17 postgres.wasm
