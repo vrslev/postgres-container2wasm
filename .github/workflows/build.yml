@@ -1,0 +1,23 @@
+name: test
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: jdx/mise-action@v2
+        with:
+          cache: true # [default: true] cache mise using GitHub's cache
+          experimental: true # [default: false] enable experimental features
+          log_level: debug # [default: info] log level
+          # automatically write this .tool-versions file
+          mise_toml: |
+            [tools]
+            wasmtime = "latest"
+      - run: mise x ubi:container2wasm/container2wasm -- c2w --help
