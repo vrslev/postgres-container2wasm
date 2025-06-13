@@ -11,18 +11,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: jdx/mise-action@v2
-        with:
-          cache: true # [default: true] cache mise using GitHub's cache
-          experimental: true # [default: false] enable experimental features
-          log_level: debug # [default: info] log level
-          # automatically write this .tool-versions file
-          mise_toml: |
-            [tools]
-            wasmtime = "latest"
       - run: |
           git clone https://github.com/container2wasm/container2wasm
           cd container2wasm
+          git checkout v0.8.2
           make
           make install
       - run: |
